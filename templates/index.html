@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Pocket Ledger · Personal Finance Agent</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="brand">
+      <span class="coin" aria-hidden="true">
+        <svg viewBox="0 0 48 48" width="40" height="40">
+          <circle cx="24" cy="24" r="20" fill="var(--lilac)"/>
+          <circle cx="24" cy="24" r="20" fill="none" stroke="var(--lilac-deep)" stroke-width="2" stroke-dasharray="2 4"/>
+          <text x="24" y="31" text-anchor="middle" font-family="Fraunces, serif" font-size="20" fill="var(--ink)">₹</text>
+        </svg>
+      </span>
+      <div>
+        <h1>Pocket Ledger</h1>
+        <p class="tagline">a soft place to keep track of where the money went</p>
+      </div>
+    </div>
+    <nav class="tabs" role="tablist">
+      <button class="tab-btn active" data-tab="ledger" role="tab" aria-selected="true">Ledger</button>
+      <button class="tab-btn" data-tab="chat" role="tab" aria-selected="false">Ask the agent</button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero-ticket receipt">
+      <span class="ticket-label">total logged</span>
+      <span class="ticket-amount">₹<span id="totalAmount">0</span></span>
+      <span class="ticket-sub" id="entryCount">0 entries</span>
+    </section>
+
+    <section class="chips" id="categoryChips" aria-label="Spending by category"></section>
+
+    <section class="panel ledger-panel" id="ledger-panel" role="tabpanel">
+      <div class="add-card">
+        <span class="tape" aria-hidden="true"></span>
+        <h2>Add an expense</h2>
+        <form id="addForm">
+          <label>
+            <span>Category</span>
+            <input type="text" id="category" placeholder="coffee, rent, tea…" autocomplete="off" required>
+          </label>
+          <label>
+            <span>Amount (₹)</span>
+            <input type="number" id="amount" placeholder="0" min="0.01" step="0.01" required>
+          </label>
+          <button type="submit">Add to ledger</button>
+        </form>
+        <p class="form-msg" id="formMsg" role="status"></p>
+      </div>
+
+      <div class="receipt-roll">
+        <h2>Recent receipts</h2>
+        <ul id="expenseList" class="receipt-list"></ul>
+        <p class="empty-state" id="emptyState" hidden>No expenses yet — your ledger is a blank page.</p>
+      </div>
+    </section>
+
+    <section class="panel chat-panel" id="chat-panel" role="tabpanel" hidden>
+      <div class="chat-window" id="chatWindow">
+        <div class="bubble agent">Hi, I'm your finance agent. Try "I spent 200 on groceries" or ask "what's my total?"</div>
+      </div>
+      <form id="chatForm" class="chat-form">
+        <input type="text" id="chatInput" placeholder="Tell me about a purchase…" autocomplete="off">
+        <button type="submit">Send</button>
+      </form>
+    </section>
+  </main>
+
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
